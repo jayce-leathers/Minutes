@@ -39,6 +39,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         // Create the adapter that will return a fragment for each of the three
@@ -124,14 +125,15 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            Fragment newFragment = null;
+
             switch (position) {
                 case 0:
-                    newFragment = new IntervalListFragment();
+                    //return new IntervalListFragment();
+                    //TODO implement listfragment
                 case 1:
-                    newFragment = new CurrentIntervalFragment();
+                    return new CurrentIntervalFragment();
             }
-            return newFragment;
+            return null;
         }
 
         @Override

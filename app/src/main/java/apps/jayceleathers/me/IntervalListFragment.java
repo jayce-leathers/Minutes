@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import apps.jayceleathers.me.minutes.R;
 
 
-public class IntervalListFragment extends android.support.v4.app.Fragment {
+public class IntervalListFragment extends android.support.v4.app.ListFragment {
 
         public IntervalListFragment() {
         }

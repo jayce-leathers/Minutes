@@ -1,10 +1,71 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="apps.jayceleathers.me.CurrentIntervalFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <TextView
+        android:id="@+id/tvCurrentTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="00:35"
+        android:textSize="100dp"
+        android:textStyle="bold"
+        android:textColor="#000000"/>
+    <TextView
+        android:id="@+id/tvOnTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvCurrentTimer"
+        android:layout_alignStart="@+id/tvCurrentTimer"
+        android:text="01:00"
+        android:textSize="40dp"/>
+    <TextView
+        android:id="@+id/tvOnTimeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/tvOnTime"
+        android:layout_below="@+id/tvCurrentTimer"
+        android:paddingLeft="20dp"
+        android:text="@string/on_time_label_text"
+        android:textSize="40dp"/>
+    <TextView
+        android:id="@+id/tvOffTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvOnTime"
+        android:layout_alignStart="@+id/tvCurrentTimer"
+        android:text="00:30"
+        android:textSize="40dp"/>
+    <TextView
+        android:id="@+id/tvOffTimeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/tvOffTime"
+        android:layout_below="@+id/tvOnTimeLabel"
+        android:paddingLeft="20dp"
+        android:text="@string/off_time_label_text"
+        android:textSize="40dp"/>
+    <Button
+        android:id="@+id/btnStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/btnPause"
+        android:text="@string/start_button_text"/>
+    <Button
+        android:id="@+id/btnPause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/pause_button_text"/>
+    <Button
+        android:id="@+id/btnStop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/btnPause"
+        android:layout_alignParentBottom="true"
+        android:text="@string/stop_button_text"/>
 
-</FrameLayout>
+</RelativeLayout>
