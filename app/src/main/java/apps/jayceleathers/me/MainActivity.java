@@ -39,7 +39,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(false);
+        //actionBar.setDisplayShowTitleEnabled(false);
+//        getSupportActionBar().setIcon(R.drawable.logo);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         // Create the adapter that will return a fragment for each of the three

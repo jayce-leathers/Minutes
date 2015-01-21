@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="logo_color">#1fb47a</color>
     <color name="red_50">#fde0dc</color>
     <color name="red_100">#f9bdbb</color>
     <color name="red_200">#f69988</color>
