@@ -3,21 +3,19 @@
     android:layout_height="match_parent"
     tools:context="apps.jayceleathers.me.CurrentIntervalFragment">
 
-    <TextView
-        android:id="@+id/tvCurrentTimer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="00:35"
-        android:textSize="100dp"
-        android:textStyle="bold"
-        android:textColor="#000000"/>
+    <!--<TextView-->
+        <!--android:id="@+id/tvCurrentTimer"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:text="00:35"-->
+        <!--android:textSize="100dp"-->
+        <!--android:textStyle="bold"-->
+        <!--android:textColor="#000000"/>-->
     <TextView
         android:id="@+id/tvOnTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvCurrentTimer"
-        android:layout_alignStart="@+id/tvCurrentTimer"
         android:text="01:00"
         android:textSize="40dp"/>
     <TextView
@@ -25,7 +23,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/tvOnTime"
-        android:layout_below="@+id/tvCurrentTimer"
         android:paddingLeft="20dp"
         android:text="@string/on_time_label_text"
         android:textSize="40dp"/>
@@ -34,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvOnTime"
-        android:layout_alignStart="@+id/tvCurrentTimer"
+        android:layout_alignStart="@+id/tvOnTime"
         android:text="00:30"
         android:textSize="40dp"/>
     <TextView

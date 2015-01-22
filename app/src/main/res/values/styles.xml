@@ -3,8 +3,8 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- customize the color palette -->
-        <item name="colorPrimary">@color/logo_color</item>
-        <item name="colorAccent">@color/red_A700</item>
+        <item name="colorPrimary">@color/grey_200</item>
+        <item name="colorAccent">@color/logo_color</item>
         <!--<item name="actionBarStyle">@style/ActionBar</item>-->
         <!--<item name="android:actionBarStyle">@style/ActionBar</item>-->
     </style>
