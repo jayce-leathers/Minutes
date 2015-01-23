@@ -1,68 +1,95 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="apps.jayceleathers.me.CurrentIntervalFragment">
 
-    <!--<TextView-->
-        <!--android:id="@+id/tvCurrentTimer"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:text="00:35"-->
-        <!--android:textSize="100dp"-->
-        <!--android:textStyle="bold"-->
-        <!--android:textColor="#000000"/>-->
+    <TextView
+        android:id="@+id/tvCurrentLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="REST"
+        android:textSize="100dp"
+        android:textStyle="bold"
+        android:textColor="#000000"/>
+
+    <TextView
+        android:id="@+id/tvCurrentTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/tvCurrentLabel"
+        android:text="00:35"
+        android:textSize="100dp"
+        android:textStyle="bold"
+        android:textColor="@color/logo_color"/>
     <TextView
         android:id="@+id/tvOnTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/tvCurrentTimer"
+        android:layout_alignStart="@+id/tvCurrentTimer"
+
         android:text="01:00"
         android:textSize="40dp"/>
     <TextView
         android:id="@+id/tvOnTimeLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/tvOnTime"
-        android:paddingLeft="20dp"
+        android:layout_alignEnd="@+id/tvCurrentTimer"
+        android:layout_below="@+id/tvCurrentTimer"
+
         android:text="@string/on_time_label_text"
         android:textSize="40dp"/>
-    <TextView
-        android:id="@+id/tvOffTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvOnTime"
-        android:layout_alignStart="@+id/tvOnTime"
-        android:text="00:30"
-        android:textSize="40dp"/>
-    <TextView
-        android:id="@+id/tvOffTimeLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/tvOffTime"
-        android:layout_below="@+id/tvOnTimeLabel"
-        android:paddingLeft="20dp"
-        android:text="@string/off_time_label_text"
-        android:textSize="40dp"/>
+    <!--<TextView-->
+        <!--android:id="@+id/tvOffTime"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/tvOnTime"-->
+        <!--android:layout_alignStart="@+id/tvOnTime"-->
+        <!--android:text="00:30"-->
+        <!--android:textSize="40dp"/>-->
+    <!--<TextView-->
+        <!--android:id="@+id/tvOffTimeLabel"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_toEndOf="@+id/tvOffTime"-->
+        <!--android:layout_below="@+id/tvOnTimeLabel"-->
+        <!--android:paddingLeft="20dp"-->
+        <!--android:text="@string/off_time_label_text"-->
+        <!--android:textSize="40dp"/>-->
     <Button
-        android:id="@+id/btnStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/btnPause"
-        android:text="@string/start_button_text"/>
+        android:layout_toStartOf="@+id/btnPause"
+        android:layout_margin="2dp"
+        android:text="@string/start_button_text"
+        style="?android:attr/borderlessButtonStyle"
+        android:textColor="#ffffff"
+        android:background="@color/teal_300"/>
     <Button
         android:id="@+id/btnPause"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="@string/pause_button_text"/>
+        android:layout_margin="2dp"
+        android:text="@string/pause_button_text"
+        style="?android:attr/borderlessButtonStyle"
+        android:textColor="#ffffff"
+        android:background="@color/blue_grey_300"/>
     <Button
         android:id="@+id/btnStop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/btnPause"
+        android:layout_toEndOf="@+id/btnPause"
         android:layout_alignParentBottom="true"
-        android:text="@string/stop_button_text"/>
+        android:layout_margin="2dp"
+        android:text="@string/stop_button_text"
+        style="?android:attr/borderlessButtonStyle"
+        android:textColor="#ffffff"
+        android:background="@color/red_300"/>
 
 </RelativeLayout>
