@@ -1,8 +1,8 @@
-package apps.jayceleathers.me;
+package apps.jayceleathers.me.fragments;
 
 
-import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +12,10 @@ import apps.jayceleathers.me.minutes.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CurrentIntervalFragment extends android.support.v4.app.Fragment {
+public class NewIntervalDialogFragment extends android.support.v4.app.DialogFragment {
 
 
-    public CurrentIntervalFragment() {
+    public NewIntervalDialogFragment() {
         // Required empty public constructor
     }
 
@@ -24,7 +24,7 @@ public class CurrentIntervalFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_current_interval, container, false);
+        return inflater.inflate(R.layout.fragment_new_interval_dialog, container, false);
     }
 
 

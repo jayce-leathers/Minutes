@@ -1,4 +1,4 @@
-package apps.jayceleathers.me;
+package apps.jayceleathers.me.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -7,7 +7,10 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import apps.jayceleathers.me.adapters.IntervalListAdapter;
 import apps.jayceleathers.me.data.Interval;
+import apps.jayceleathers.me.minutes.R;
+import apps.jayceleathers.me.views.FloatingActionButton;
 
 /**
  * A fragment representing a list of Items.
@@ -38,6 +41,19 @@ public class IntervalListFragment extends android.support.v4.app.ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        FloatingActionButton mFab = new FloatingActionButton.Builder(getActivity())
+                .withColor(getResources().getColor(R.color.logo_color))
+                .withDrawable(getResources().getDrawable(R.drawable.plus))
+                .withSize(72)
+                .withMargins(0, 0, 16, 16)
+                .create();
+        mFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         intervals = new ArrayList<>(10);
         Interval example = new Interval("Situps", 10000L, 50000L);
         intervals.add(example);

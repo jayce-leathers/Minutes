@@ -1,4 +1,4 @@
-package apps.jayceleathers.me;
+package apps.jayceleathers.me.activities;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,10 +13,12 @@ import android.view.MenuItem;
 
 import java.util.Locale;
 
+import apps.jayceleathers.me.fragments.CurrentIntervalFragment;
+import apps.jayceleathers.me.fragments.IntervalListFragment;
 import apps.jayceleathers.me.data.Interval;
 import apps.jayceleathers.me.minutes.R;
 
-public class MainActivity extends ActionBarActivity implements ActionBar.TabListener, IntervalListFragment.OnFragmentInteractionListener{
+public class MainActivity extends ActionBarActivity implements ActionBar.TabListener, IntervalListFragment.OnFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide

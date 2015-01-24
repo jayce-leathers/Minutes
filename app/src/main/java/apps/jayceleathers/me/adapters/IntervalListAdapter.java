@@ -1,4 +1,4 @@
-package apps.jayceleathers.me;
+package apps.jayceleathers.me.adapters;
 
 import android.app.Activity;
 import android.content.Context;

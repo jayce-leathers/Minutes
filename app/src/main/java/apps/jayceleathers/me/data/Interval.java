@@ -1,9 +1,11 @@
 package apps.jayceleathers.me.data;
 
+import com.orm.SugarRecord;
+
 /**
  * Created by Jayce on 1/23/15.
  */
-public class Interval {
+public class Interval extends SugarRecord<Interval>{
     private String label;
     private Long workTime;
     private Long restTime;
