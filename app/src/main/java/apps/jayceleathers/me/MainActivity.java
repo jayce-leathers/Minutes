@@ -13,9 +13,10 @@ import android.view.MenuItem;
 
 import java.util.Locale;
 
+import apps.jayceleathers.me.data.Interval;
 import apps.jayceleathers.me.minutes.R;
 
-public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
+public class MainActivity extends ActionBarActivity implements ActionBar.TabListener, IntervalListFragment.OnFragmentInteractionListener{
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -113,6 +114,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
 
+    @Override
+    public void onFragmentInteraction(Interval clickedInterval) {
+
+    }
+
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
@@ -130,8 +136,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
             switch (position) {
                 case 0:
-                    //return new IntervalListFragment();
-                    //TODO implement listfragment
+                    return new IntervalListFragment();
                 case 1:
                     return new CurrentIntervalFragment();
             }
