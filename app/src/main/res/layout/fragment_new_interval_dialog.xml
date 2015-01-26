@@ -1,4 +1,4 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="apps.jayceleathers.me.fragments.NewIntervalDialogFragment">
@@ -8,7 +8,38 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Enter Interval Name"/>
+    <TextView
+        android:id="@+id/tvWorkPickerLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etLabel"
+        android:text="Work"/>
     <NumberPicker
+        android:id="@+id/npMinutesWork"
+        android:layout_below="@id/tvWorkPickerLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"></NumberPicker>
-</FrameLayout>
+    <NumberPicker
+        android:id="@+id/npSecondsWork"
+        android:layout_below="@id/tvWorkPickerLabel"
+        android:layout_toEndOf="@+id/npMinutesWork"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"></NumberPicker>
+    <TextView
+        android:id="@+id/tvRestPickerLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/npMinutesWork"
+        android:text="Rest"/>
+    <NumberPicker
+        android:id="@+id/npMinutesRest"
+        android:layout_below="@id/tvRestPickerLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"></NumberPicker>
+    <NumberPicker
+        android:id="@+id/npSecondsRest"
+        android:layout_below="@id/tvRestPickerLabel"
+        android:layout_toEndOf="@+id/npMinutesRest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"></NumberPicker>
+</RelativeLayout>

@@ -2,6 +2,7 @@ package apps.jayceleathers.me.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.widget.ListView;
 
@@ -51,7 +52,8 @@ public class IntervalListFragment extends android.support.v4.app.ListFragment {
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                DialogFragment newFragment = NewIntervalDialogFragment.newInstance();
+                newFragment.show(getFragmentManager(), "dialog");
             }
         });
         intervals = new ArrayList<>(10);
