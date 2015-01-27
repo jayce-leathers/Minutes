@@ -13,33 +13,65 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/etLabel"
+        android:textStyle="bold"
+        android:textColor="#000000"
         android:text="Work"/>
-    <NumberPicker
-        android:id="@+id/npMinutesWork"
-        android:layout_below="@id/tvWorkPickerLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"></NumberPicker>
-    <NumberPicker
-        android:id="@+id/npSecondsWork"
-        android:layout_below="@id/tvWorkPickerLabel"
-        android:layout_toEndOf="@+id/npMinutesWork"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"></NumberPicker>
     <TextView
         android:id="@+id/tvRestPickerLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/npMinutesWork"
+        android:layout_below="@id/etLabel"
+        android:layout_centerHorizontal="true"
+        android:paddingStart="20dp"
+        android:textStyle="bold"
+        android:textColor="#000000"
         android:text="Rest"/>
+    <RelativeLayout
+        android:id="@+id/rlPickers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvWorkPickerLabel">
+    <NumberPicker
+        android:id="@+id/npMinutesWork"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"></NumberPicker>
+    <TextView
+        android:id="@+id/tvColonWork"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/npMinutesWork"
+        android:text=":"/>
+    <NumberPicker
+        android:id="@+id/npSecondsWork"
+        android:layout_toEndOf="@+id/tvColonWork"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"></NumberPicker>
+
     <NumberPicker
         android:id="@+id/npMinutesRest"
-        android:layout_below="@id/tvRestPickerLabel"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"></NumberPicker>
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/npSecondsWork"></NumberPicker>
+        <TextView
+            android:id="@+id/tvColonRest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/npMinutesRest"
+            android:text=":"/>
     <NumberPicker
         android:id="@+id/npSecondsRest"
-        android:layout_below="@id/tvRestPickerLabel"
-        android:layout_toEndOf="@+id/npMinutesRest"
+        android:layout_toEndOf="@+id/tvColonRest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"></NumberPicker>
+    </RelativeLayout>
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_below="@id/rlPickers"
+        android:layout_alignEnd="@+id/rlPickers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="save"/>
 </RelativeLayout>
