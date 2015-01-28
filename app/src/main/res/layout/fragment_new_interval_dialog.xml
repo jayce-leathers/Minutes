@@ -7,28 +7,33 @@
         android:id="@+id/etLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
         android:hint="Enter Interval Name"/>
     <TextView
         android:id="@+id/tvWorkPickerLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/etLabel"
+        android:layout_alignStart="@+id/etLabel"
         android:textStyle="bold"
         android:textColor="#000000"
+        android:textSize="20dp"
         android:text="Work"/>
     <TextView
         android:id="@+id/tvRestPickerLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/etLabel"
-        android:layout_centerHorizontal="true"
-        android:paddingStart="20dp"
+        android:layout_alignEnd="@+id/etLabel"
         android:textStyle="bold"
+        android:textSize="20dp"
         android:textColor="#000000"
         android:text="Rest"/>
     <RelativeLayout
         android:id="@+id/rlPickers"
         android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvWorkPickerLabel">
     <NumberPicker
@@ -68,10 +73,19 @@
         android:layout_height="wrap_content"></NumberPicker>
     </RelativeLayout>
     <Button
+        android:id="@+id/btnCancel"
+        android:layout_below="@id/rlPickers"
+        android:layout_width="wrap_content"
+        android:layout_toStartOf="@+id/btnSave"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Cancel"/>
+    <Button
         android:id="@+id/btnSave"
         android:layout_below="@id/rlPickers"
         android:layout_alignEnd="@+id/rlPickers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:text="save"/>
 </RelativeLayout>

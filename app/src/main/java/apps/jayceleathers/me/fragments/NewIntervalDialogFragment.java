@@ -31,6 +31,7 @@ public class NewIntervalDialogFragment extends android.support.v4.app.DialogFrag
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View newView = inflater.inflate(R.layout.fragment_new_interval_dialog, container, false);
+
         NumberPicker npMinutesWork = (NumberPicker) newView.findViewById(R.id.npMinutesWork);
         NumberPicker npSecondsWork = (NumberPicker) newView.findViewById(R.id.npSecondsWork);
         NumberPicker npMinutesRest = (NumberPicker) newView.findViewById(R.id.npMinutesRest);
