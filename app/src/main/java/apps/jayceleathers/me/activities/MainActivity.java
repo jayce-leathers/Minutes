@@ -18,7 +18,7 @@ import apps.jayceleathers.me.fragments.IntervalListFragment;
 import apps.jayceleathers.me.data.Interval;
 import apps.jayceleathers.me.minutes.R;
 
-public class MainActivity extends ActionBarActivity implements ActionBar.TabListener, IntervalListFragment.OnFragmentInteractionListener {
+public class MainActivity extends ActionBarActivity implements ActionBar.TabListener, IntervalListFragment.OnListFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -135,12 +135,12 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-
+            Interval testInterval = new Interval("Situps", 10000L, 10000L);
             switch (position) {
                 case 0:
                     return new IntervalListFragment();
                 case 1:
-                    return new CurrentIntervalFragment();
+                    return CurrentIntervalFragment.newInstance(testInterval);
             }
             return null;
         }

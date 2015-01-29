@@ -17,18 +17,17 @@ import apps.jayceleathers.me.views.FloatingActionButton;
  * A fragment representing a list of Items.
  * <p/>
  * <p/>
- * Activities containing this fragment MUST implement the {@link OnFragmentInteractionListener}
+ * Activities containing this fragment MUST implement the {@link apps.jayceleathers.me.fragments.IntervalListFragment.OnListFragmentInteractionListener}
  * interface.
  */
 public class IntervalListFragment extends android.support.v4.app.ListFragment {
 
-    private OnFragmentInteractionListener mListener;
+    private OnListFragmentInteractionListener mListener;
     private ArrayList<Interval> intervals;
 
     // TODO: Rename and change types of parameters
     public static IntervalListFragment newInstance() {
         IntervalListFragment fragment = new IntervalListFragment();
-        Bundle args = new Bundle();
         return fragment;
     }
 
@@ -67,7 +66,7 @@ public class IntervalListFragment extends android.support.v4.app.ListFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (OnFragmentInteractionListener) activity;
+            mListener = (OnListFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -102,7 +101,7 @@ public class IntervalListFragment extends android.support.v4.app.ListFragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
+    public interface OnListFragmentInteractionListener {
         public void onFragmentInteraction(Interval clickedInterval);
     }
 

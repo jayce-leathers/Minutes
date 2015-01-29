@@ -14,5 +14,7 @@
     <string name="stop_button_text">STOP</string>
     <string name="on_time_label_text">WORK</string>
     <string name="off_time_label_text">OFF</string>
+    <string name="REST">REST</string>
+    <string name="WORK">WORK</string>
 
 </resources>

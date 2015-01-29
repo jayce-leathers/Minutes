@@ -2,18 +2,30 @@ package apps.jayceleathers.me.data;
 
 import com.orm.SugarRecord;
 
+import java.io.Serializable;
+
 /**
  * Created by Jayce on 1/23/15.
  */
-public class Interval extends SugarRecord<Interval>{
+public class Interval extends SugarRecord<Interval> implements Serializable{
     private String label;
     private Long workTime;
     private Long restTime;
+    private boolean work;
 
     public Interval(String label, Long workTime, Long restTime) {
         this.label = label;
         this.workTime = workTime;
         this.restTime = restTime;
+        work = true;
+    }
+
+    public boolean isWork() {
+        return work;
+    }
+
+    public void flipInterval() {
+        this.work = !work;
     }
 
     public String getLabel() {

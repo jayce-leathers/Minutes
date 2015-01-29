@@ -15,7 +15,7 @@
         android:textColor="#000000"/>
 
     <TextView
-        android:id="@+id/tvCurrentTimer"
+        android:id="@+id/tvCurrentTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -25,20 +25,20 @@
         android:textStyle="bold"
         android:textColor="@color/logo_color"/>
     <TextView
-        android:id="@+id/tvOnTime"
+        android:id="@+id/tvNextTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvCurrentTimer"
-        android:layout_alignStart="@+id/tvCurrentTimer"
+        android:layout_below="@+id/tvCurrentTime"
+        android:layout_alignStart="@+id/tvCurrentTime"
 
         android:text="01:00"
         android:textSize="40dp"/>
     <TextView
-        android:id="@+id/tvOnTimeLabel"
+        android:id="@+id/tvNextLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/tvCurrentTimer"
-        android:layout_below="@+id/tvCurrentTimer"
+        android:layout_alignEnd="@+id/tvCurrentTime"
+        android:layout_below="@+id/tvCurrentTime"
 
         android:text="@string/on_time_label_text"
         android:textSize="40dp"/>
@@ -60,6 +60,7 @@
         <!--android:text="@string/off_time_label_text"-->
         <!--android:textSize="40dp"/>-->
     <Button
+        android:id="@+id/btnStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
