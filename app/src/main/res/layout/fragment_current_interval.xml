@@ -69,7 +69,8 @@
         android:text="@string/start_button_text"
         style="?android:attr/borderlessButtonStyle"
         android:textColor="#ffffff"
-        android:background="@color/teal_300"/>
+        android:background="@color/logo_color"
+        android:textStyle="bold"/>
     <Button
         android:id="@+id/btnPause"
         android:layout_width="wrap_content"
@@ -80,7 +81,8 @@
         android:text="@string/pause_button_text"
         style="?android:attr/borderlessButtonStyle"
         android:textColor="#ffffff"
-        android:background="@color/blue_grey_300"/>
+        android:background="#ffd700"
+        android:textStyle="bold"/>
     <Button
         android:id="@+id/btnStop"
         android:layout_width="wrap_content"
@@ -91,6 +93,7 @@
         android:text="@string/stop_button_text"
         style="?android:attr/borderlessButtonStyle"
         android:textColor="#ffffff"
-        android:background="@color/red_300"/>
+        android:background="@color/red_300"
+        android:textStyle="bold"/>
 
 </RelativeLayout>
