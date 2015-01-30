@@ -94,7 +94,7 @@ public class CurrentIntervalFragment extends android.support.v4.app.Fragment {
 
             timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
             if(currentInterval.isWork()) {
-                updatedTime = currentInterval.getWorkTime() - timeInMilliseconds;
+                updatedTime = currentInterval.getWorkTime() - timeInMilliseconds - timeSwapBuff;
                 if(updatedTime<=0){
                     startTime = SystemClock.uptimeMillis();
                     timeSwapBuff = 0L;
@@ -106,7 +106,7 @@ public class CurrentIntervalFragment extends android.support.v4.app.Fragment {
                 }
             }
             else {
-                updatedTime = currentInterval.getRestTime() - timeInMilliseconds;
+                updatedTime = currentInterval.getRestTime() - timeInMilliseconds- timeSwapBuff;
                 if(updatedTime<=0){
                     startTime = SystemClock.uptimeMillis();
                     timeSwapBuff = 0L;
@@ -117,14 +117,6 @@ public class CurrentIntervalFragment extends android.support.v4.app.Fragment {
                     tvNextLabel.setText(getString(R.string.REST));
                 }
             }
-            //TODO FIX LAG OF INTERVAL AFTER RESUME
-            if(timeSwapBuff > 0L) {
-                updatedTime -= timeSwapBuff;
-                if(updatedTime<=0){
-                    updatedTime = 0;
-                }
-            }
-
 
             tvCurrentTime.setText(formatMillis(updatedTime));
             customHandler.postDelayed(this, 0);
