@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import apps.jayceleathers.me.data.Interval;
 import apps.jayceleathers.me.minutes.R;
+import apps.jayceleathers.me.views.FloatingActionButton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -50,6 +52,19 @@ public class CurrentIntervalFragment extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        FloatingActionButton mFab = new FloatingActionButton.Builder(getActivity())
+                .withColor(getResources().getColor(R.color.logo_color))
+                .withDrawable(getResources().getDrawable(R.drawable.plus))
+                .withSize(72)
+                .withMargins(0, 0, 16, 16)
+                .create();
+        mFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment newFragment = NewIntervalDialogFragment.newInstance();
+                newFragment.show(getFragmentManager(), "dialog");
+            }
+        });
         // Inflate the layout for this fragment
         View newView = inflater.inflate(R.layout.fragment_current_interval, container, false);
         this.currentInterval = (Interval) getArguments().getSerializable(Interval_Key);
@@ -64,12 +79,14 @@ public class CurrentIntervalFragment extends android.support.v4.app.Fragment {
             tvCurrentLabel.setText(getString(R.string.WORK));
             tvNextTime.setText(formatMillis(currentInterval.getRestTime()));
             tvNextLabel.setText(getString(R.string.REST));
+            tvCurrentTime.setTextColor(getResources().getColor(R.color.logo_color));
         }
         else {
             tvCurrentTime.setText(formatMillis(currentInterval.getRestTime()));
             tvCurrentLabel.setText(getString(R.string.REST));
             tvNextTime.setText(formatMillis(currentInterval.getWorkTime()));
             tvNextLabel.setText(getString(R.string.WORK));
+            tvCurrentTime.setTextColor(getResources().getColor(R.color.stop_color));
         }
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +120,7 @@ public class CurrentIntervalFragment extends android.support.v4.app.Fragment {
                     tvCurrentLabel.setText(getString(R.string.REST));
                     tvNextTime.setText(formatMillis(currentInterval.getWorkTime()));
                     tvNextLabel.setText(getString(R.string.WORK));
+                    tvCurrentTime.setTextColor(getResources().getColor(R.color.stop_color));
                 }
             }
             else {
@@ -115,6 +133,7 @@ public class CurrentIntervalFragment extends android.support.v4.app.Fragment {
                     tvCurrentLabel.setText(getString(R.string.WORK));
                     tvNextTime.setText(formatMillis(currentInterval.getRestTime()));
                     tvNextLabel.setText(getString(R.string.REST));
+                    tvCurrentTime.setTextColor(getResources().getColor(R.color.logo_color));
                 }
             }
 

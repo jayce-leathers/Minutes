@@ -93,7 +93,7 @@
         android:text="@string/stop_button_text"
         style="?android:attr/borderlessButtonStyle"
         android:textColor="#ffffff"
-        android:background="@color/red_300"
+        android:background="@color/stop_color"
         android:textStyle="bold"/>
 
 </RelativeLayout>

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="logo_color">#1fb47a</color>
+    <color name="pause_color">#ffd700</color>
+    <color name="stop_color">#f36c60</color>
     <color name="red_50">#fde0dc</color>
     <color name="red_100">#f9bdbb</color>
     <color name="red_200">#f69988</color>
-    <color name="red_300">#f36c60</color>
     <color name="red_400">#e84e40</color>
     <color name="red_500">#e51c23</color>
     <color name="red_600">#dd191d</color>
