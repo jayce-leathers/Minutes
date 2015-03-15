@@ -23,13 +23,10 @@ import apps.jayceleathers.me.views.FloatingActionButton;
 public class IntervalListFragment extends android.support.v4.app.ListFragment {
 
     private OnListFragmentInteractionListener mListener;
+    public int DIALOG_REQUEST_CODE = 101;
     private ArrayList<Interval> intervals;
-
-    // TODO: Rename and change types of parameters
-    public static IntervalListFragment newInstance() {
-        IntervalListFragment fragment = new IntervalListFragment();
-        return fragment;
-    }
+    private IntervalListAdapter adapter;
+    static  FloatingActionButton mFab;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -42,24 +39,32 @@ public class IntervalListFragment extends android.support.v4.app.ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        FloatingActionButton mFab = new FloatingActionButton.Builder(getActivity())
+
+
+        mFab = new FloatingActionButton.Builder(getActivity())
                 .withColor(getResources().getColor(R.color.logo_color))
                 .withDrawable(getResources().getDrawable(R.drawable.plus))
                 .withSize(72)
                 .withMargins(0, 0, 16, 16)
                 .create();
+
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment newFragment = NewIntervalDialogFragment.newInstance();
-                newFragment.show(getFragmentManager(), "dialog");
+                showDialog();
             }
         });
-        intervals = new ArrayList<>(10);
-        Interval example = new Interval("Situps", 10000L, 50000L);
-        intervals.add(example);
-        setListAdapter(new IntervalListAdapter(getActivity(), intervals));
+        try{
+        intervals = (ArrayList<Interval>) Interval.listAll(Interval.class);}
+        catch (android.database.sqlite.SQLiteException e){
+            intervals = new ArrayList<>(10);
+        }
+        //Interval example = new Interval("Situps", 10000L, 50000L);
+        //intervals.add(example);
+        adapter = new IntervalListAdapter(getActivity(), intervals);
+        setListAdapter(adapter);
     }
+
 
 
     @Override
@@ -87,22 +92,34 @@ public class IntervalListFragment extends android.support.v4.app.ListFragment {
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(intervals.get(position));
+            mListener.onClick(v, intervals.get(position));
         }
     }
+
+
+    public void refresh(){
+        //Log.d("REFRESH", "REFRESH CALLED");
+        intervals = (ArrayList<Interval>) Interval.listAll(Interval.class);
+        IntervalListAdapter newAdapter = new IntervalListAdapter(getActivity(),intervals);
+        setListAdapter(newAdapter);
+
+    }
+    void showDialog(){
+        DialogFragment newFragment = NewIntervalDialogFragment.newInstance();
+        newFragment.setTargetFragment(this, 1);
+        newFragment.show(getFragmentManager(), "dialog");
+    }
+
 
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        public void onFragmentInteraction(Interval clickedInterval);
+        public void onClick(View v, Interval clickedInterval);
+        public void onLongClick(View v, Interval clickedInterval);
     }
 
 }

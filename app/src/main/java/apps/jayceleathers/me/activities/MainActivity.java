@@ -1,8 +1,6 @@
 package apps.jayceleathers.me.activities;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -10,15 +8,16 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
-import java.util.Locale;
-
+import apps.jayceleathers.me.adapters.TabPagerAdapter;
+import apps.jayceleathers.me.data.Interval;
 import apps.jayceleathers.me.fragments.CurrentIntervalFragment;
 import apps.jayceleathers.me.fragments.IntervalListFragment;
-import apps.jayceleathers.me.data.Interval;
+import apps.jayceleathers.me.fragments.NewIntervalDialogFragment;
 import apps.jayceleathers.me.minutes.R;
 
-public class MainActivity extends ActionBarActivity implements ActionBar.TabListener, IntervalListFragment.OnListFragmentInteractionListener {
+public class MainActivity extends ActionBarActivity implements ActionBar.TabListener, IntervalListFragment.OnListFragmentInteractionListener, NewIntervalDialogFragment.NewDialogListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -28,17 +27,34 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
-    SectionsPagerAdapter mSectionsPagerAdapter;
+    TabPagerAdapter mSectionsPagerAdapter;
 
     /**
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
 
+    static final public String INTERVALS_KEY = "Saved Intervals";
+    static final public String WORKOUT_KEY = "Current Workout";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+//        FloatingActionButton mFab = new FloatingActionButton.Builder(this)
+//                .withColor(getResources().getColor(R.color.logo_color))
+//                .withDrawable(getResources().getDrawable(R.drawable.plus))
+//                .withSize(72)
+//                .withMargins(0, 0, 16, 16)
+//                .create();
+//
+//        mFab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                showDialog();
+//            }
+//        });
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
@@ -49,7 +65,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter = new TabPagerAdapter(getSupportFragmentManager(), this);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -76,8 +92,21 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             .setText(mSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
         }
+
+
+//
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        fragmentManager.beginTransaction().add(mSectionsPagerAdapter.getItem(0), INTERVALS_KEY).commit();
+//        fragmentManager.beginTransaction().add(mSectionsPagerAdapter.getItem(1), WORKOUT_KEY).commit();
     }
 
+//    void showDialog(){
+//        final DialogFragment newFragment = NewIntervalDialogFragment.newInstance();
+//// This is the requestCode that you are sending.
+//        newFragment.setTargetFragment(this, 1);
+//// This is the tag, "dialog" being sent.
+//        newFragment.show(getSupportFragmentManager(), "dialog");
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -117,52 +146,28 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     }
 
     @Override
-    public void onFragmentInteraction(Interval clickedInterval) {
+    public void onClick(View v, Interval clickedInterval) {
+        CurrentIntervalFragment refreshedFragment = (CurrentIntervalFragment) mSectionsPagerAdapter.getRegisteredFragment(1);
+        refreshedFragment.setNewInterval(clickedInterval);
 
+        mViewPager.setCurrentItem(1);
+
+        //getSupportFragmentManager().beginTransaction().replace(R.layout.fragment_current_interval, newfragment).commit();
     }
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+//    @Override
+    public void onFinishNewDialog() {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
+            IntervalListFragment fragment = (IntervalListFragment) mSectionsPagerAdapter.getRegisteredFragment(0);
+            fragment.refresh();
 
-        @Override
-        public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            Interval testInterval = new Interval("Situps", 10000L, 10000L);
-            switch (position) {
-                case 0:
-                    return new IntervalListFragment();
-                case 1:
-                    return CurrentIntervalFragment.newInstance(testInterval);
-            }
-            return null;
-        }
-
-        @Override
-        public int getCount() {
-            return 2;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            Locale l = Locale.getDefault();
-            switch (position) {
-                case 0:
-                    return getString(R.string.title_section1).toUpperCase(l);
-                case 1:
-                    return getString(R.string.title_section2).toUpperCase(l);
-            }
-            return null;
-        }
     }
 
 
 
-}
+
+
+    }
+
+
+

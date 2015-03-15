@@ -13,6 +13,9 @@ public class Interval extends SugarRecord<Interval> implements Serializable{
     private Long restTime;
     private boolean work;
 
+    public Interval() {
+    }
+
     public Interval(String label, Long workTime, Long restTime) {
         this.label = label;
         this.workTime = workTime;

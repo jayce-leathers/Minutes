@@ -1,26 +1,31 @@
 package apps.jayceleathers.me.fragments;
 
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.NumberPicker;
 
+import apps.jayceleathers.me.data.Interval;
 import apps.jayceleathers.me.minutes.R;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class NewIntervalDialogFragment extends android.support.v4.app.DialogFragment {
-
-
+    private Button btnSave;
+    private EditText etLabel;
+    private NewDialogListener listener;
     public NewIntervalDialogFragment() {
         // Required empty public constructor
     }
 
-    static NewIntervalDialogFragment newInstance() {
+    public static NewIntervalDialogFragment newInstance() {
         return new NewIntervalDialogFragment();
     }
 
@@ -31,11 +36,11 @@ public class NewIntervalDialogFragment extends android.support.v4.app.DialogFrag
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View newView = inflater.inflate(R.layout.fragment_new_interval_dialog, container, false);
-
-        NumberPicker npMinutesWork = (NumberPicker) newView.findViewById(R.id.npMinutesWork);
-        NumberPicker npSecondsWork = (NumberPicker) newView.findViewById(R.id.npSecondsWork);
-        NumberPicker npMinutesRest = (NumberPicker) newView.findViewById(R.id.npMinutesRest);
-        NumberPicker npSecondsRest = (NumberPicker) newView.findViewById(R.id.npSecondsRest);
+        etLabel = (EditText) newView.findViewById(R.id.etLabel);
+        final NumberPicker npMinutesWork = (NumberPicker) newView.findViewById(R.id.npMinutesWork);
+        final NumberPicker npSecondsWork = (NumberPicker) newView.findViewById(R.id.npSecondsWork);
+        final NumberPicker npMinutesRest = (NumberPicker) newView.findViewById(R.id.npMinutesRest);
+        final NumberPicker npSecondsRest = (NumberPicker) newView.findViewById(R.id.npSecondsRest);
         String[] mins = new String[11];
         for(int i=0; i<mins.length; i++)
             mins[i] = Integer.toString(i);
@@ -66,8 +71,47 @@ public class NewIntervalDialogFragment extends android.support.v4.app.DialogFrag
         npSecondsRest.setWrapSelectorWheel(false);
         npSecondsRest.setValue(30);
         npSecondsRest.setDisplayedValues(secs);
+
+        btnSave = (Button) newView.findViewById(R.id.btnSave);
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NewDialogListener activity = (NewDialogListener) getActivity();
+//                if(activity==null){
+//                    Log.d("NULL" ,"NULL ACTIVITY");
+//                }
+                long workMins = npMinutesWork.getValue() * 60000;
+                long restMins = npMinutesRest.getValue() * 60000;
+                long workSecs = npSecondsWork.getValue() * 1000;
+                long restSecs = npSecondsRest.getValue() * 1000;
+                String label = etLabel.getText().toString();
+                Interval newInterval = new Interval(label, workMins + workSecs, restMins + restSecs);
+                newInterval.save();
+                activity.onFinishNewDialog();
+                dismiss();
+            }
+        });
         return newView;
     }
 
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+        listener = (NewDialogListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement NewDialogListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        listener = null;
+    }
+
+    public interface NewDialogListener {
+        void onFinishNewDialog();
+    }
 
 }

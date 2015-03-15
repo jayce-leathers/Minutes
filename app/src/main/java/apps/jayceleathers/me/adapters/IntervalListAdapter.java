@@ -11,19 +11,21 @@ import android.widget.TextView;
 import java.util.List;
 
 import apps.jayceleathers.me.data.Interval;
-
 import apps.jayceleathers.me.minutes.R;
 
 /**
  * Created by Jayce on 1/23/15.
  */
-public class IntervalListAdapter extends ArrayAdapter {
+public class IntervalListAdapter extends ArrayAdapter<Interval> {
 
     private Context context;
+
+    private List<Interval> intervals;
 
     public IntervalListAdapter(Context context, List intervals) {
         super(context, android.R.layout.simple_list_item_1, intervals);
         this.context = context;
+        this.intervals = intervals;
     }
 
     /*
@@ -41,7 +43,6 @@ public class IntervalListAdapter extends ArrayAdapter {
         secs = secs % 60;
         return mins + ":" + secs;
     }
-
 
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
