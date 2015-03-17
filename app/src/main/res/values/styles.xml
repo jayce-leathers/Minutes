@@ -6,6 +6,8 @@
         <item name="colorPrimary">@color/grey_200</item>
         <item name="colorAccent">@color/logo_color</item>
         <!--<item name="actionBarStyle">@style/ActionBar</item>-->
+        <item name="android:dialogTheme">@style/StyledDialog</item>
+        <item name="numberPickerStyle">@style/NPWidget.Holo.Light.NumberPicker</item>
         <!--<item name="android:actionBarStyle">@style/ActionBar</item>-->
     </style>
 
@@ -13,5 +15,17 @@
         <!--<item name="icon">@drawable/logo</item>-->
         <!--<item name="android:icon">@drawable/logo</item>-->
     <!--</style>-->
+
+    <style name="StyledDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/grey_200</item>
+        <!--<item name="colorPrimaryDark">@color/apptheme_color_dark</item>-->
+        <item name="colorAccent">@color/logo_color</item>
+    </style>
+
+    <style name="NumberPickerStyle" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/grey_200</item>
+        <!--<item name="colorPrimaryDark">@color/apptheme_color_dark</item>-->
+        <item name="colorAccent">@color/logo_color</item>
+    </style>
 
 </resources>

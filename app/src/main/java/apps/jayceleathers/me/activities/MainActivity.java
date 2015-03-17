@@ -1,6 +1,7 @@
 package apps.jayceleathers.me.activities;
 
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -16,6 +17,7 @@ import apps.jayceleathers.me.fragments.CurrentIntervalFragment;
 import apps.jayceleathers.me.fragments.IntervalListFragment;
 import apps.jayceleathers.me.fragments.NewIntervalDialogFragment;
 import apps.jayceleathers.me.minutes.R;
+import apps.jayceleathers.me.views.FloatingActionButton;
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener, IntervalListFragment.OnListFragmentInteractionListener, NewIntervalDialogFragment.NewDialogListener {
 
@@ -42,19 +44,19 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        FloatingActionButton mFab = new FloatingActionButton.Builder(this)
-//                .withColor(getResources().getColor(R.color.logo_color))
-//                .withDrawable(getResources().getDrawable(R.drawable.plus))
-//                .withSize(72)
-//                .withMargins(0, 0, 16, 16)
-//                .create();
-//
-//        mFab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                showDialog();
-//            }
-//        });
+        FloatingActionButton mFab = new FloatingActionButton.Builder(this)
+                .withColor(getResources().getColor(R.color.logo_color))
+                .withDrawable(getResources().getDrawable(R.drawable.plus))
+                .withSize(72)
+                .withMargins(0, 0, 4, 4)
+                .create();
+
+        mFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog();
+            }
+        });
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
@@ -149,10 +151,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public void onClick(View v, Interval clickedInterval) {
         CurrentIntervalFragment refreshedFragment = (CurrentIntervalFragment) mSectionsPagerAdapter.getRegisteredFragment(1);
         refreshedFragment.setNewInterval(clickedInterval);
-
         mViewPager.setCurrentItem(1);
-
-        //getSupportFragmentManager().beginTransaction().replace(R.layout.fragment_current_interval, newfragment).commit();
     }
 
 //    @Override
@@ -163,7 +162,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     }
 
-
+    void showDialog(){
+        DialogFragment newFragment = NewIntervalDialogFragment.newInstance();
+        newFragment.show(getSupportFragmentManager(), "dialog");
+    }
 
 
 

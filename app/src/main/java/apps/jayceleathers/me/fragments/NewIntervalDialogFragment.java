@@ -3,13 +3,16 @@ package apps.jayceleathers.me.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.NumberPicker;
+import net.simonvt.numberpicker.NumberPicker;
 
 import apps.jayceleathers.me.data.Interval;
 import apps.jayceleathers.me.minutes.R;
@@ -19,8 +22,12 @@ import apps.jayceleathers.me.minutes.R;
  */
 public class NewIntervalDialogFragment extends android.support.v4.app.DialogFragment {
     private Button btnSave;
+    private Button btnCancel;
     private EditText etLabel;
+    private static final int SEC_INTERVAL = 15;
+    private static final int MAX_MIN = 10;
     private NewDialogListener listener;
+
     public NewIntervalDialogFragment() {
         // Required empty public constructor
     }
@@ -35,62 +42,94 @@ public class NewIntervalDialogFragment extends android.support.v4.app.DialogFrag
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View newView = inflater.inflate(R.layout.fragment_new_interval_dialog, container, false);
+        final View newView = inflater.inflate(R.layout.fragment_new_interval_dialog, container, false);
         etLabel = (EditText) newView.findViewById(R.id.etLabel);
+        etLabel.setOnKeyListener(new View.OnKeyListener()
+        {
+            public boolean onKey(View v, int keyCode, KeyEvent event)
+            {
+                if (event.getAction() == KeyEvent.ACTION_DOWN)
+                {
+                    switch (keyCode)
+                    {
+                        case KeyEvent.KEYCODE_DPAD_CENTER:
+                        case KeyEvent.KEYCODE_ENTER:
+                            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(newView.getWindowToken(), 0);
+                            return true;
+                        default:
+                            break;
+                    }
+                }
+                return false;
+            }
+        });
         final NumberPicker npMinutesWork = (NumberPicker) newView.findViewById(R.id.npMinutesWork);
         final NumberPicker npSecondsWork = (NumberPicker) newView.findViewById(R.id.npSecondsWork);
         final NumberPicker npMinutesRest = (NumberPicker) newView.findViewById(R.id.npMinutesRest);
         final NumberPicker npSecondsRest = (NumberPicker) newView.findViewById(R.id.npSecondsRest);
-        String[] mins = new String[11];
+        String[] mins = new String[MAX_MIN+1];
         for(int i=0; i<mins.length; i++)
             mins[i] = Integer.toString(i);
-        String[] secs = new String[60];
-        for(int i=0; i<secs.length; i++)
-            secs[i] = Integer.toString(i);
+        String[] secs = new String[60/SEC_INTERVAL];
+        for(int i=0, n=0; i<secs.length; i++,n+=SEC_INTERVAL) {
+            if(n==0)
+                secs[i]="00";
+            else
+                secs[i] = Integer.toString(n);
+        }
 
         npMinutesWork.setMinValue(0);
-        npMinutesWork.setMaxValue(10);
+        npMinutesWork.setMaxValue(mins.length-1);
         npMinutesWork.setWrapSelectorWheel(false);
         npMinutesWork.setDisplayedValues(mins);
         npMinutesWork.setValue(1);
 
         npMinutesRest.setMinValue(0);
-        npMinutesRest.setMaxValue(10);
+        npMinutesRest.setMaxValue(mins.length-1);
         npMinutesRest.setWrapSelectorWheel(false);
         npMinutesRest.setDisplayedValues(mins);
         npMinutesRest.setValue(0);
 
         npSecondsWork.setMinValue(0);
-        npSecondsWork.setMaxValue(59);
+        npSecondsWork.setMaxValue(secs.length-1);
         npSecondsWork.setWrapSelectorWheel(false);
-        npSecondsWork.setValue(30);
         npSecondsWork.setDisplayedValues(secs);
 
         npSecondsRest.setMinValue(0);
-        npSecondsRest.setMaxValue(59);
+        npSecondsRest.setMaxValue(secs.length-1);
         npSecondsRest.setWrapSelectorWheel(false);
-        npSecondsRest.setValue(30);
         npSecondsRest.setDisplayedValues(secs);
+        npSecondsRest.setValue(secs.length/2);
 
         btnSave = (Button) newView.findViewById(R.id.btnSave);
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NewDialogListener activity = (NewDialogListener) getActivity();
+                //listener = (NewDialogListener) getActivity();
 //                if(activity==null){
 //                    Log.d("NULL" ,"NULL ACTIVITY");
 //                }
                 long workMins = npMinutesWork.getValue() * 60000;
                 long restMins = npMinutesRest.getValue() * 60000;
-                long workSecs = npSecondsWork.getValue() * 1000;
-                long restSecs = npSecondsRest.getValue() * 1000;
-                String label = etLabel.getText().toString();
+                long workSecs = npSecondsWork.getValue()*SEC_INTERVAL * 1000;
+                long restSecs = npSecondsRest.getValue()*SEC_INTERVAL * 1000;
+                String label = etLabel.getText().toString().toUpperCase();
                 Interval newInterval = new Interval(label, workMins + workSecs, restMins + restSecs);
                 newInterval.save();
-                activity.onFinishNewDialog();
+                listener.onFinishNewDialog();
                 dismiss();
             }
         });
+        btnCancel = (Button) newView.findViewById(R.id.btnCancel);
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
         return newView;
     }
 

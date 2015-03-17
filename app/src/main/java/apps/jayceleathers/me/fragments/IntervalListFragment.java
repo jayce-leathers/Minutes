@@ -2,7 +2,6 @@ package apps.jayceleathers.me.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,7 +12,6 @@ import java.util.ArrayList;
 
 import apps.jayceleathers.me.adapters.IntervalListAdapter;
 import apps.jayceleathers.me.data.Interval;
-import apps.jayceleathers.me.minutes.R;
 import apps.jayceleathers.me.views.FloatingActionButton;
 
 /**
@@ -44,19 +42,19 @@ public class IntervalListFragment extends android.support.v4.app.ListFragment {
         super.onCreate(savedInstanceState);
 
 
-        mFab = new FloatingActionButton.Builder(getActivity())
-                .withColor(getResources().getColor(R.color.logo_color))
-                .withDrawable(getResources().getDrawable(R.drawable.plus))
-                .withSize(72)
-                .withMargins(0, 0, 16, 16)
-                .create();
-
-        mFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialog();
-            }
-        });
+//        mFab = new FloatingActionButton.Builder(getActivity())
+//                .withColor(getResources().getColor(R.color.logo_color))
+//                .withDrawable(getResources().getDrawable(R.drawable.plus))
+//                .withSize(72)
+//                .withMargins(0, 0, 16, 16)
+//                .create();
+//
+//        mFab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                showDialog();
+//            }
+//        });
         try{
         intervals = (ArrayList<Interval>) Interval.listAll(Interval.class);}
         catch (android.database.sqlite.SQLiteException e){
@@ -132,11 +130,7 @@ public class IntervalListFragment extends android.support.v4.app.ListFragment {
         setListAdapter(newAdapter);
 
     }
-    void showDialog(){
-        DialogFragment newFragment = NewIntervalDialogFragment.newInstance();
-        newFragment.setTargetFragment(this, 1);
-        newFragment.show(getFragmentManager(), "dialog");
-    }
+
 
 
     /**

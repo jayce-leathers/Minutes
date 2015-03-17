@@ -41,7 +41,10 @@ public class IntervalListAdapter extends ArrayAdapter<Interval> {
         int secs = (int) (milliseconds / 1000);
         int mins = secs / 60;
         secs = secs % 60;
-        return mins + ":" + secs;
+        if(secs == 0)
+            return mins + ":00";
+        else
+            return mins + ":" + secs;
     }
 
     public void remove(int position){
