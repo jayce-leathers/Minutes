@@ -42,23 +42,7 @@
 
         android:text="@string/on_time_label_text"
         android:textSize="40dp"/>
-    <!--<TextView-->
-        <!--android:id="@+id/tvOffTime"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@+id/tvOnTime"-->
-        <!--android:layout_alignStart="@+id/tvOnTime"-->
-        <!--android:text="00:30"-->
-        <!--android:textSize="40dp"/>-->
-    <!--<TextView-->
-        <!--android:id="@+id/tvOffTimeLabel"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_toEndOf="@+id/tvOffTime"-->
-        <!--android:layout_below="@+id/tvOnTimeLabel"-->
-        <!--android:paddingLeft="20dp"-->
-        <!--android:text="@string/off_time_label_text"-->
-        <!--android:textSize="40dp"/>-->
+
     <Button
         android:id="@+id/btnStart"
         android:layout_width="wrap_content"
@@ -67,7 +51,6 @@
         android:layout_toStartOf="@+id/btnPause"
         android:layout_margin="2dp"
         android:text="@string/start_button_text"
-        style="?android:attr/borderlessButtonStyle"
         android:textColor="#ffffff"
         android:background="@color/logo_color"
         android:textStyle="bold"/>
@@ -79,7 +62,6 @@
         android:layout_centerHorizontal="true"
         android:layout_margin="2dp"
         android:text="@string/pause_button_text"
-        style="?android:attr/borderlessButtonStyle"
         android:textColor="#ffffff"
         android:background="#ffd700"
         android:textStyle="bold"/>
@@ -91,8 +73,8 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="2dp"
         android:text="@string/stop_button_text"
-        style="?android:attr/borderlessButtonStyle"
         android:textColor="#ffffff"
+        android:clickable="true"
         android:background="@color/stop_color"
         android:textStyle="bold"/>
 

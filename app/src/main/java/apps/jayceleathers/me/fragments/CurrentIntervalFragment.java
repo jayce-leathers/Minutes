@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -76,25 +77,59 @@ public class CurrentIntervalFragment extends android.support.v4.app.Fragment {
         tvNextTime = (TextView) newView.findViewById(R.id.tvNextTime);
         setDisplay();
 
-        btnStart.setOnClickListener(new View.OnClickListener() {
+
+        btnStart.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                startTime = SystemClock.uptimeMillis();
-                customHandler.postDelayed(updateTimerThread, 0);
+            public boolean onTouch(View v, MotionEvent event) {
+                switch(event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        // PRESSED
+                        btnStart.setBackgroundColor(getResources().getColor(R.color.logo_dark));
+                        return true; // if you want to handle the touch event
+                    case MotionEvent.ACTION_UP:
+                        // RELEASED
+                        startTime = SystemClock.uptimeMillis();
+                        customHandler.postDelayed(updateTimerThread, 0);
+                        btnStart.setBackgroundColor(getResources().getColor(R.color.logo_color));
+                        return true; // if you want to handle the touch event
+                }
+                return false;
             }
         });
-        btnPause.setOnClickListener(new View.OnClickListener() {
+        btnPause.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                timeSwapBuff = timeInMilliseconds;
-                customHandler.removeCallbacks(updateTimerThread);
+            public boolean onTouch(View v, MotionEvent event) {
+                switch(event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        // PRESSED
+                        btnPause.setBackgroundColor(getResources().getColor(R.color.pause_dark));
+                        return true; // if you want to handle the touch event
+                    case MotionEvent.ACTION_UP:
+                        // RELEASED
+                        btnPause.setBackgroundColor(getResources().getColor(R.color.pause_color));
+                        timeSwapBuff = timeInMilliseconds;
+                        customHandler.removeCallbacks(updateTimerThread);
+                        return true; // if you want to handle the touch event
+                }
+                return false;
             }
         });
-        btnStop.setOnClickListener(new View.OnClickListener() {
+        btnStop.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                setDisplay();
-                customHandler.removeCallbacks(updateTimerThread);
+            public boolean onTouch(View v, MotionEvent event) {
+                switch(event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        // PRESSED
+                        btnStop.setBackgroundColor(getResources().getColor(R.color.stop_dark));
+                        return true; // if you want to handle the touch event
+                    case MotionEvent.ACTION_UP:
+                        // RELEASED
+                        btnStop.setBackgroundColor(getResources().getColor(R.color.stop_color));
+                        setDisplay();
+                        customHandler.removeCallbacks(updateTimerThread);
+                        return true; // if you want to handle the touch event
+                }
+                return false;
             }
         });
         return newView;
