@@ -3,7 +3,10 @@ package apps.jayceleathers.me.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -22,6 +25,7 @@ import apps.jayceleathers.me.views.FloatingActionButton;
  */
 public class IntervalListFragment extends android.support.v4.app.ListFragment {
 
+    private static final int CONTEXT_ACTION_DELETE = 101;
     private OnListFragmentInteractionListener mListener;
     public int DIALOG_REQUEST_CODE = 101;
     private ArrayList<Interval> intervals;
@@ -38,7 +42,6 @@ public class IntervalListFragment extends android.support.v4.app.ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
 
         mFab = new FloatingActionButton.Builder(getActivity())
@@ -65,7 +68,31 @@ public class IntervalListFragment extends android.support.v4.app.ListFragment {
         setListAdapter(adapter);
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        //menu.setHeaderTitle("Menu");
+        menu.add(0, CONTEXT_ACTION_DELETE, 0, "Delete");
+    }
 
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        if (item.getItemId() == CONTEXT_ACTION_DELETE) {
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+            ((IntervalListAdapter) getListAdapter()).remove(info.position);
+            ((IntervalListAdapter) getListAdapter()).notifyDataSetChanged();
+        } else {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        registerForContextMenu(getListView());
+
+    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -100,6 +127,7 @@ public class IntervalListFragment extends android.support.v4.app.ListFragment {
     public void refresh(){
         //Log.d("REFRESH", "REFRESH CALLED");
         intervals = (ArrayList<Interval>) Interval.listAll(Interval.class);
+
         IntervalListAdapter newAdapter = new IntervalListAdapter(getActivity(),intervals);
         setListAdapter(newAdapter);
 
@@ -119,7 +147,6 @@ public class IntervalListFragment extends android.support.v4.app.ListFragment {
      */
     public interface OnListFragmentInteractionListener {
         public void onClick(View v, Interval clickedInterval);
-        public void onLongClick(View v, Interval clickedInterval);
     }
 
 }

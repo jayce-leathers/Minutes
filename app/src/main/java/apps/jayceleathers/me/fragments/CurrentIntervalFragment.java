@@ -21,6 +21,7 @@ public class CurrentIntervalFragment extends android.support.v4.app.Fragment {
 
     private Button btnStart;
     private Button btnPause;
+    private Button btnStop;
     private TextView tvCurrentTime;
     private TextView tvCurrentLabel;
     private TextView tvNextLabel;
@@ -68,6 +69,7 @@ public class CurrentIntervalFragment extends android.support.v4.app.Fragment {
         this.currentInterval = (Interval) getArguments().getSerializable(Interval_Key);
         btnStart = (Button) newView.findViewById(R.id.btnStart);
         btnPause = (Button) newView.findViewById(R.id.btnPause);
+        btnStop = (Button)  newView.findViewById(R.id.btnStop);
         tvCurrentLabel = (TextView) newView.findViewById(R.id.tvCurrentLabel);
         tvCurrentTime = (TextView) newView.findViewById(R.id.tvCurrentTime);
         tvNextLabel = (TextView) newView.findViewById(R.id.tvNextLabel);
@@ -85,6 +87,13 @@ public class CurrentIntervalFragment extends android.support.v4.app.Fragment {
             @Override
             public void onClick(View v) {
                 timeSwapBuff = timeInMilliseconds;
+                customHandler.removeCallbacks(updateTimerThread);
+            }
+        });
+        btnStop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setDisplay();
                 customHandler.removeCallbacks(updateTimerThread);
             }
         });
@@ -131,6 +140,7 @@ public class CurrentIntervalFragment extends android.support.v4.app.Fragment {
 
     public void setNewInterval(Interval newInterval){
         currentInterval = newInterval;
+        customHandler.removeCallbacks(updateTimerThread);
         setDisplay();
     }
 

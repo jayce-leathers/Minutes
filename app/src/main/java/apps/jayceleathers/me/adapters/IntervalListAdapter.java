@@ -44,6 +44,12 @@ public class IntervalListAdapter extends ArrayAdapter<Interval> {
         return mins + ":" + secs;
     }
 
+    public void remove(int position){
+        intervals.get(position).delete();
+        intervals.remove(position);
+    }
+
+
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         Interval interval = (Interval) getItem(position);
