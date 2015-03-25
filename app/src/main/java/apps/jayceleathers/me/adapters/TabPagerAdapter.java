@@ -26,7 +26,7 @@ public class TabPagerAdapter extends SmartFragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
-        Interval testInterval = new Interval("Situps", 60000L, 30000L);
+        Interval testInterval = new Interval("Situps", 60000L, 30000L, 10);
         switch (position) {
             case 0:
                 return new IntervalListFragment();

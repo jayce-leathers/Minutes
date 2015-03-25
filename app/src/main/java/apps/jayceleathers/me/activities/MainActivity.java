@@ -36,8 +36,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
      */
     ViewPager mViewPager;
 
-    static final public String INTERVALS_KEY = "Saved Intervals";
-    static final public String WORKOUT_KEY = "Current Workout";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +46,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 .withColor(getResources().getColor(R.color.logo_color))
                 .withDrawable(getResources().getDrawable(R.drawable.plus))
                 .withSize(72)
-                .withMargins(0, 0, 4, 4)
+                .withMargins(0, 0, 6,6)
                 .create();
 
         mFab.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +59,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
         //actionBar.setDisplayShowTitleEnabled(false);
-//        getSupportActionBar().setIcon(R.drawable.logo);
+        getSupportActionBar().setIcon(R.drawable.logo1);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
@@ -95,20 +93,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             .setTabListener(this));
         }
 
-
-//
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        fragmentManager.beginTransaction().add(mSectionsPagerAdapter.getItem(0), INTERVALS_KEY).commit();
-//        fragmentManager.beginTransaction().add(mSectionsPagerAdapter.getItem(1), WORKOUT_KEY).commit();
     }
 
-//    void showDialog(){
-//        final DialogFragment newFragment = NewIntervalDialogFragment.newInstance();
-//// This is the requestCode that you are sending.
-//        newFragment.setTargetFragment(this, 1);
-//// This is the tag, "dialog" being sent.
-//        newFragment.show(getSupportFragmentManager(), "dialog");
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -154,7 +140,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         mViewPager.setCurrentItem(1);
     }
 
-//    @Override
+    //sets current list fragment and refreshes it
+    @Override
     public void onFinishNewDialog() {
 
             IntervalListFragment fragment = (IntervalListFragment) mSectionsPagerAdapter.getRegisteredFragment(0);
@@ -162,10 +149,12 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     }
 
+    //creates and shows a dialog fragment of NewIntervalDialogFragment
     void showDialog(){
         DialogFragment newFragment = NewIntervalDialogFragment.newInstance();
         newFragment.show(getSupportFragmentManager(), "dialog");
     }
+
 
 
 

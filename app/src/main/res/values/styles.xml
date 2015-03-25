@@ -3,12 +3,11 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- customize the color palette -->
-        <item name="colorPrimary">@color/grey_200</item>
+        <item name="colorPrimary">@color/grey_background</item>
         <item name="colorAccent">@color/logo_color</item>
         <item name="android:dialogTheme">@style/StyledDialog</item>
         <item name="numberPickerStyle">@style/NPWidget.Holo.Light.NumberPicker</item>
-
-        <!--<item name="android:buttonStyle">?android:borderlessButtonStyle</item>-->
+        <item name="android:buttonStyle">?android:borderlessButtonStyle</item>
     </style>
 
     <!--<style name="ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">-->

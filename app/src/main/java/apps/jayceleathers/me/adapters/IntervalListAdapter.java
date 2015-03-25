@@ -37,22 +37,14 @@ public class IntervalListAdapter extends ArrayAdapter<Interval> {
         TextView tvRestTime;
     }
 
-    private String formatIntervalTimer(long milliseconds) {
-        int secs = (int) (milliseconds / 1000);
-        int mins = secs / 60;
-        secs = secs % 60;
-        if(secs == 0)
-            return mins + ":00";
-        else
-            return mins + ":" + secs;
-    }
+
 
     public void remove(int position){
         intervals.get(position).delete();
         intervals.remove(position);
     }
 
-
+    //standard viewholder pattern to create list
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         Interval interval = (Interval) getItem(position);
@@ -73,8 +65,8 @@ public class IntervalListAdapter extends ArrayAdapter<Interval> {
             holder = (ViewHolder) viewToUse.getTag();
         }
         holder.tvLabel.setText(interval.getLabel());
-        holder.tvWorkTime.setText(formatIntervalTimer(interval.getWorkTime()));
-        holder.tvRestTime.setText(formatIntervalTimer(interval.getRestTime()));
+        holder.tvWorkTime.setText(Interval.formatIntervalTimer(interval.getWorkTime()));
+        holder.tvRestTime.setText(Interval.formatIntervalTimer(interval.getRestTime()));
         return viewToUse;
     }
 

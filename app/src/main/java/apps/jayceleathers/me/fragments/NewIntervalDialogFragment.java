@@ -21,10 +21,14 @@ import apps.jayceleathers.me.minutes.R;
  * A simple {@link Fragment} subclass.
  */
 public class NewIntervalDialogFragment extends android.support.v4.app.DialogFragment {
+    //the ui views
     private Button btnSave;
     private Button btnCancel;
     private EditText etLabel;
+    private EditText etReps;
+    //what interval to display seconds in
     private static final int SEC_INTERVAL = 15;
+    //the maximum allowable min value
     private static final int MAX_MIN = 10;
     private NewDialogListener listener;
 
@@ -44,6 +48,8 @@ public class NewIntervalDialogFragment extends android.support.v4.app.DialogFrag
         // Inflate the layout for this fragment
         final View newView = inflater.inflate(R.layout.fragment_new_interval_dialog, container, false);
         etLabel = (EditText) newView.findViewById(R.id.etLabel);
+
+        //hides the keyboard on enter of data
         etLabel.setOnKeyListener(new View.OnKeyListener()
         {
             public boolean onKey(View v, int keyCode, KeyEvent event)
@@ -64,10 +70,37 @@ public class NewIntervalDialogFragment extends android.support.v4.app.DialogFrag
                 return false;
             }
         });
+
+
+        etReps = (EditText) newView.findViewById(R.id.etReps);
+        //with reps edittext
+        etReps.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event)
+            {
+                if (event.getAction() == KeyEvent.ACTION_DOWN)
+                {
+                    switch (keyCode)
+                    {
+                        case KeyEvent.KEYCODE_DPAD_CENTER:
+                        case KeyEvent.KEYCODE_ENTER:
+                            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(newView.getWindowToken(), 0);
+                            return true;
+                        default:
+                            break;
+                    }
+                }
+                return false;
+            }
+        });
+        //fetch number picker views
         final NumberPicker npMinutesWork = (NumberPicker) newView.findViewById(R.id.npMinutesWork);
         final NumberPicker npSecondsWork = (NumberPicker) newView.findViewById(R.id.npSecondsWork);
         final NumberPicker npMinutesRest = (NumberPicker) newView.findViewById(R.id.npMinutesRest);
         final NumberPicker npSecondsRest = (NumberPicker) newView.findViewById(R.id.npSecondsRest);
+
+        //create arrays for the values the number pickers can display
         String[] mins = new String[MAX_MIN+1];
         for(int i=0; i<mins.length; i++)
             mins[i] = Integer.toString(i);
@@ -106,16 +139,13 @@ public class NewIntervalDialogFragment extends android.support.v4.app.DialogFrag
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //listener = (NewDialogListener) getActivity();
-//                if(activity==null){
-//                    Log.d("NULL" ,"NULL ACTIVITY");
-//                }
+                //create
                 long workMins = npMinutesWork.getValue() * 60000;
                 long restMins = npMinutesRest.getValue() * 60000;
                 long workSecs = npSecondsWork.getValue()*SEC_INTERVAL * 1000;
                 long restSecs = npSecondsRest.getValue()*SEC_INTERVAL * 1000;
                 String label = etLabel.getText().toString().toUpperCase();
-                Interval newInterval = new Interval(label, workMins + workSecs, restMins + restSecs);
+                Interval newInterval = new Interval(label, workMins + workSecs, restMins + restSecs, Integer.parseInt(etReps.getText().toString()));
                 newInterval.save();
                 listener.onFinishNewDialog();
                 dismiss();
@@ -133,6 +163,7 @@ public class NewIntervalDialogFragment extends android.support.v4.app.DialogFrag
         return newView;
     }
 
+    //attaches listener to acitvity
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
@@ -149,6 +180,7 @@ public class NewIntervalDialogFragment extends android.support.v4.app.DialogFrag
         listener = null;
     }
 
+    //listener subscribed to by activity to handle the addition of a new interval
     public interface NewDialogListener {
         void onFinishNewDialog();
     }

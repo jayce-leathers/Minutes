@@ -13,14 +13,14 @@
         android:inputType="textCapCharacters"
         android:textSize="30dp"
         android:textAlignment="center"
-        android:hint="Enter Interval Name"/>
+        android:hint="INTERVAL NAME"/>
     <TextView
         android:id="@+id/tvWorkPickerLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/etLabel"
-        android:layout_alignStart="@+id/etLabel"
-        android:layout_marginLeft="20dp"
+        android:layout_alignStart="@+id/rlPickers"
+        android:layout_marginLeft="40dp"
         android:textStyle="bold"
         android:textColor="#000000"
         android:textSize="20dp"
@@ -30,9 +30,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/etLabel"
-        android:layout_alignEnd="@+id/etLabel"
+        android:layout_alignEnd="@+id/rlPickers"
         android:textStyle="bold"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="40dp"
         android:textSize="20dp"
         android:textColor="#000000"
         android:text="Rest"/>
@@ -65,33 +65,60 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/npSecondsWork"/>
-        <TextView
-            android:id="@+id/tvColonRest"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/npMinutesRest"
-            android:text=":"/>
+
+    <TextView
+        android:id="@+id/tvColonRest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/npMinutesRest"
+        android:text=":"/>
+
     <net.simonvt.numberpicker.NumberPicker
         android:id="@+id/npSecondsRest"
         android:layout_toEndOf="@+id/tvColonRest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     </RelativeLayout>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/etReps"
+        android:hint="REPS"
+        android:textAlignment="center"
+        android:layout_below="@+id/rlPickers"
+        android:layout_centerHorizontal="true"/>
+
     <Button
         android:id="@+id/btnCancel"
-        android:layout_below="@id/rlPickers"
+        android:layout_below="@id/etReps"
         android:layout_width="wrap_content"
         android:layout_toStartOf="@+id/btnSave"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Cancel"/>
+        android:layout_margin="2dp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:background="@color/stop_color"
+        android:textSize="15dp"
+        android:text="CANCEL"/>
     <Button
         android:id="@+id/btnSave"
-        android:layout_below="@id/rlPickers"
+        android:layout_below="@id/etReps"
         android:layout_alignEnd="@+id/rlPickers"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="save"/>
+        android:textSize="15dp"
+        android:layout_margin="2dp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:background="@color/logo_color"
+        android:text="SAVE"/>
+
+
 </RelativeLayout>

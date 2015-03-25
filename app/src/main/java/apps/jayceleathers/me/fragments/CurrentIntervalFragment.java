@@ -19,27 +19,35 @@ import apps.jayceleathers.me.minutes.R;
  * A simple {@link Fragment} subclass.
  */
 public class CurrentIntervalFragment extends android.support.v4.app.Fragment {
-
-    private Button btnStart;
-    private Button btnPause;
+    //views
+    private Button btnPlayPause;
     private Button btnStop;
     private TextView tvCurrentTime;
     private TextView tvCurrentLabel;
     private TextView tvNextLabel;
     private TextView tvNextTime;
-    private long startTime = 0L;
-    private Handler customHandler = new Handler();
+    private TextView tvRepCount;
+    //handler for the uiupdate runnable
+    private Handler mHandler = new Handler();
+    //current interval being displayed
     private Interval currentInterval;
-    public static String Interval_Key = "Current Interval";
-    long timeInMilliseconds = 0L;
-    long timeSwapBuff = 0L;
-    long updatedTime = 0L;
+    //current interval key to put the current interval in the bundle
+    public static String INTERVAL_KEY = "Current Interval";
+    //values to maintain the timer
+    private long startTime = 0L;
+    private long timeInMilliseconds = 0L;
+    private long timeSwapBuff = 0L;
+    private long updatedTime = 0L;
+    private int repCount;
+    //booleans to represent the state of the timer
+    private boolean paused = true;
+    private boolean firstStart = true;
 
 
     public static CurrentIntervalFragment newInstance(Interval currentInterval) {
         CurrentIntervalFragment fragment = new CurrentIntervalFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Interval_Key, currentInterval);
+        bundle.putSerializable(INTERVAL_KEY, currentInterval);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -52,68 +60,53 @@ public class CurrentIntervalFragment extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-//        FloatingActionButton mFab = new FloatingActionButton.Builder(getActivity())
-//                .withColor(getResources().getColor(R.color.logo_color))
-//                .withDrawable(getResources().getDrawable(R.drawable.plus))
-//                .withSize(72)
-//                .withMargins(0, 0, 16, 16)
-//                .create();
-//        mFab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                DialogFragment newFragment = NewIntervalDialogFragment.newInstance();
-//                newFragment.show(getFragmentManager(), "dialog");
-//            }
-//        });
         // Inflate the layout for this fragment
         View newView = inflater.inflate(R.layout.fragment_current_interval, container, false);
-        this.currentInterval = (Interval) getArguments().getSerializable(Interval_Key);
-        btnStart = (Button) newView.findViewById(R.id.btnStart);
-        btnPause = (Button) newView.findViewById(R.id.btnPause);
+        //set the current interval
+        this.currentInterval = (Interval) getArguments().getSerializable(INTERVAL_KEY);
+        repCount = currentInterval.getReps();
+
+        //fetch the views for the ui elements
+        btnPlayPause = (Button) newView.findViewById(R.id.btnPlayPause);
         btnStop = (Button)  newView.findViewById(R.id.btnStop);
         tvCurrentLabel = (TextView) newView.findViewById(R.id.tvCurrentLabel);
         tvCurrentTime = (TextView) newView.findViewById(R.id.tvCurrentTime);
         tvNextLabel = (TextView) newView.findViewById(R.id.tvNextLabel);
         tvNextTime = (TextView) newView.findViewById(R.id.tvNextTime);
-        setDisplay();
+        tvRepCount = (TextView) newView.findViewById(R.id.tvRepCounter);
+        //set starting ui
+        resetDisplay();
 
-
-        btnStart.setOnTouchListener(new View.OnTouchListener() {
+        //pause/play/stop button listeners  all actions implemented in play(), pause(), and stop methods below
+        btnPlayPause.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                switch(event.getAction()) {
+                switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         // PRESSED
-                        btnStart.setBackgroundColor(getResources().getColor(R.color.logo_dark));
+                        if (paused)
+                            btnPlayPause.setBackgroundColor(getResources().getColor(R.color.logo_dark));
+                        else
+                            btnPlayPause.setBackgroundColor(getResources().getColor(R.color.pause_dark));
                         return true; // if you want to handle the touch event
                     case MotionEvent.ACTION_UP:
                         // RELEASED
-                        startTime = SystemClock.uptimeMillis();
-                        customHandler.postDelayed(updateTimerThread, 0);
-                        btnStart.setBackgroundColor(getResources().getColor(R.color.logo_color));
+                        if (paused){
+                            btnPlayPause.setBackgroundColor(getResources().getColor(R.color.pause_color));
+                            btnPlayPause.setText("PAUSE");
+                            play();
+                        }
+                        else {
+                            btnPlayPause.setBackgroundColor(getResources().getColor(R.color.logo_color));
+                            btnPlayPause.setText("START");
+                            pause();
+                        }
                         return true; // if you want to handle the touch event
                 }
                 return false;
             }
         });
-        btnPause.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch(event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        // PRESSED
-                        btnPause.setBackgroundColor(getResources().getColor(R.color.pause_dark));
-                        return true; // if you want to handle the touch event
-                    case MotionEvent.ACTION_UP:
-                        // RELEASED
-                        btnPause.setBackgroundColor(getResources().getColor(R.color.pause_color));
-                        timeSwapBuff = timeInMilliseconds;
-                        customHandler.removeCallbacks(updateTimerThread);
-                        return true; // if you want to handle the touch event
-                }
-                return false;
-            }
-        });
+
         btnStop.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -125,8 +118,7 @@ public class CurrentIntervalFragment extends android.support.v4.app.Fragment {
                     case MotionEvent.ACTION_UP:
                         // RELEASED
                         btnStop.setBackgroundColor(getResources().getColor(R.color.stop_color));
-                        setDisplay();
-                        customHandler.removeCallbacks(updateTimerThread);
+                        stop();
                         return true; // if you want to handle the touch event
                 }
                 return false;
@@ -135,74 +127,126 @@ public class CurrentIntervalFragment extends android.support.v4.app.Fragment {
         return newView;
     }
 
-
-    private Runnable updateTimerThread = new Runnable() {
+    //runnable to update the ui - posts it self if repcount is not yet reached
+    Runnable uiUpdate = new Runnable() {
         public void run() {
 
-            timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
-            if(currentInterval.isWork()) {
-                updatedTime = currentInterval.getWorkTime() - timeInMilliseconds - timeSwapBuff;
-                if(updatedTime<=0){
-                    startTime = SystemClock.uptimeMillis();
-                    timeSwapBuff = 0L;
-                    updatedTime = currentInterval.getRestTime();
-                    currentInterval.flipInterval();
-                    tvCurrentLabel.setText(getString(R.string.REST));
-                    tvNextTime.setText(formatMillis(currentInterval.getWorkTime()));
-                    tvNextLabel.setText(getString(R.string.WORK));
-                    tvCurrentTime.setTextColor(getResources().getColor(R.color.stop_color));
-                }
-            }
-            else {
-                updatedTime = currentInterval.getRestTime() - timeInMilliseconds- timeSwapBuff;
-                if(updatedTime<=0){
-                    startTime = SystemClock.uptimeMillis();
-                    timeSwapBuff = 0L;
-                    updatedTime = currentInterval.getWorkTime();
-                    currentInterval.flipInterval();
-                    tvCurrentLabel.setText(getString(R.string.WORK));
-                    tvNextTime.setText(formatMillis(currentInterval.getRestTime()));
-                    tvNextLabel.setText(getString(R.string.REST));
-                    tvCurrentTime.setTextColor(getResources().getColor(R.color.logo_color));
-                }
-            }
+                //time elapsed since start
+                timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
+                //logic is symmetric for work and rest intervals only difference is the ui changes
+                //and repcount is only decremented on a work interval zero
+                if (currentInterval.isWork()) {
+                    //computes new time to display
+                    updatedTime = currentInterval.getWorkTime() - timeInMilliseconds - timeSwapBuff;
+                    //if the time flips the interval
+                    if (updatedTime <= 0) {
+                        //reset start time and buffer and set the start time of next rest interval
+                        startTime = SystemClock.uptimeMillis();
+                        timeSwapBuff = 0L;
+                        updatedTime = currentInterval.getRestTime();
+                        //set interval to rest and decrement the rep counter one rep has been completed
+                        currentInterval.flipInterval();
+                        repCount--;
+                        //all reps have been completed reset timer to start state
+                        if (repCount == 0) {
+                            paused = true;
 
-            tvCurrentTime.setText(formatMillis(updatedTime));
-            customHandler.postDelayed(this, 0);
+                            currentInterval.setWork();
+                            tvCurrentTime.setText("");
+                            resetDisplay();
+                            timeSwapBuff = 0L;
+                            updatedTime = 0L;
+                            timeInMilliseconds = 0L;
+
+                        } else {
+                            //more reps to go swap to the rest state
+                            tvRepCount.setText(repCount + "/" + currentInterval.getReps());
+                            tvCurrentLabel.setText(getString(R.string.REST));
+                            tvNextTime.setText(Interval.formatIntervalTimer(currentInterval.getWorkTime()));
+                            tvNextLabel.setText(getString(R.string.WORK));
+                            tvCurrentTime.setTextColor(getResources().getColor(R.color.stop_color));
+
+                            tvRepCount.setText("" + repCount +"/" + currentInterval.getReps());
+                        }
+
+                    }
+                }
+                //comparable logic for rest state
+                else {
+                    updatedTime = currentInterval.getRestTime() - timeInMilliseconds - timeSwapBuff;
+                    if (updatedTime <= 0) {
+                        startTime = SystemClock.uptimeMillis();
+                        timeSwapBuff = 0L;
+                        updatedTime = currentInterval.getWorkTime();
+                        currentInterval.flipInterval();
+                        tvCurrentLabel.setText(getString(R.string.WORK));
+                        tvNextTime.setText(Interval.formatIntervalTimer(currentInterval.getRestTime()));
+                        tvNextLabel.setText(getString(R.string.REST));
+                        tvCurrentTime.setTextColor(getResources().getColor(R.color.logo_color));
+                    }
+                }
+            //post next runnable if more reps to go
+            if (repCount > 0) {
+
+                tvCurrentTime.setText(Interval.formatIntervalTimer(updatedTime));
+                mHandler.postDelayed(this,0);
+            }
+            //else reset the reps must check after checking the rep otherwise runnable would always be posted
+            //because repcount would always be greater than zero
+            else
+                repCount = currentInterval.getReps();
         }
 
     };
 
+    //replaces the current interval with a new one used in interval list when selecting an interval
     public void setNewInterval(Interval newInterval){
         currentInterval = newInterval;
-        customHandler.removeCallbacks(updateTimerThread);
-        setDisplay();
+        repCount = currentInterval.getReps();
+        mHandler.removeCallbacks(uiUpdate);
+        resetDisplay();
     }
 
-    private void setDisplay(){
-        if(currentInterval.isWork()) {
-            tvCurrentTime.setText(formatMillis(currentInterval.getWorkTime()));
-            tvCurrentLabel.setText(getString(R.string.WORK));
-            tvNextTime.setText(formatMillis(currentInterval.getRestTime()));
-            tvNextLabel.setText(getString(R.string.REST));
-            tvCurrentTime.setTextColor(getResources().getColor(R.color.logo_color));
-        }
-        else {
-            tvCurrentTime.setText(formatMillis(currentInterval.getRestTime()));
-            tvCurrentLabel.setText(getString(R.string.REST));
-            tvNextTime.setText(formatMillis(currentInterval.getWorkTime()));
-            tvNextLabel.setText(getString(R.string.WORK));
-            tvCurrentTime.setTextColor(getResources().getColor(R.color.stop_color));
-        }
+    //sets display to the start state
+    private void resetDisplay(){
+        tvRepCount.setText(currentInterval.getReps() + "/" + currentInterval.getReps());
+        tvCurrentTime.setText(Interval.formatIntervalTimer(currentInterval.getWorkTime()));
+        tvCurrentLabel.setText(getString(R.string.WORK));
+        tvNextTime.setText(Interval.formatIntervalTimer((currentInterval.getRestTime())));
+        tvNextLabel.setText(getString(R.string.REST));
+        tvCurrentTime.setTextColor(getResources().getColor(R.color.logo_color));
+        btnPlayPause.setBackgroundColor(getResources().getColor(R.color.logo_color));
+        btnPlayPause.setText("START");
+    }
+
+    //starts the timer and posts the first ui update runnable
+    private void play(){
+        paused = false;
+        startTime = SystemClock.uptimeMillis();
+        mHandler.postDelayed(uiUpdate,0);
+    }
+
+    //pauses timer and removes callbacks to the ui update runnable
+    private void pause(){
+        paused = true;
+        mHandler.removeCallbacks(uiUpdate);
+        timeSwapBuff = timeInMilliseconds;
+    }
+
+    //resets everrrything
+    private void stop(){
+        paused = true;
+        resetDisplay();
+        repCount = currentInterval.getReps();
+        currentInterval.setWork();
+        timeSwapBuff = 0L;
+        updatedTime = 0L;
+        timeInMilliseconds = 0L;
+        mHandler.removeCallbacks(uiUpdate);
     }
 
 
-    private String formatMillis(long millis){
-        int secs = (int) (millis / 1000);
-        int mins = secs / 60;
-        secs = secs % 60;
-        return "0" + mins + ":"
-                + String.format("%02d", secs);
-    }
+
+
 
 }

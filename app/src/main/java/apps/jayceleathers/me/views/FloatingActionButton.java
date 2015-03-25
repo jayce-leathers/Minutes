@@ -20,6 +20,8 @@ import android.widget.FrameLayout;
 
 /**
  * Created by Jayce on 1/24/15.
+ * courtesy of somebody
+ * TODO figure out where I got this. I know I bookmarked it...
  */
 public class FloatingActionButton extends View {
 

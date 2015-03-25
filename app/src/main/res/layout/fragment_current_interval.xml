@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="REST"
-        android:textSize="100dp"
+        android:textSize="75dp"
         android:textStyle="bold"
         android:textColor="#000000"/>
 
@@ -21,7 +21,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/tvCurrentLabel"
         android:text="00:35"
-        android:textSize="100dp"
+        android:textSize="75dp"
         android:textStyle="bold"
         android:textColor="@color/logo_color"/>
     <TextView
@@ -29,7 +29,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvCurrentTime"
-        android:layout_alignStart="@+id/tvCurrentTime"
+        android:layout_toLeftOf="@+id/center"
+        android:layout_marginRight="5dp"
 
         android:text="01:00"
         android:textSize="40dp"/>
@@ -37,44 +38,60 @@
         android:id="@+id/tvNextLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/tvCurrentTime"
+        android:layout_toEndOf="@+id/center"
         android:layout_below="@+id/tvCurrentTime"
-
+        android:layout_marginLeft="5dp"
         android:text="@string/on_time_label_text"
         android:textSize="40dp"/>
+    <TextView
+        android:id="@+id/tvRepCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvNextLabel"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="20dp"
+        android:textSize="50dp"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:text="7/8"
+        />
 
     <Button
-        android:id="@+id/btnStart"
+        android:id="@+id/btnPlayPause"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_toStartOf="@+id/btnPause"
+        android:layout_toStartOf="@+id/center"
         android:layout_margin="2dp"
         android:text="@string/start_button_text"
-        android:textColor="#ffffff"
+        android:textColor="@color/white"
         android:background="@color/logo_color"
         android:textStyle="bold"/>
-    <Button
-        android:id="@+id/btnPause"
+    <!--<Button-->
+        <!--android:id="@+id/btnPause"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_margin="2dp"-->
+        <!--android:text="@string/pause_button_text"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:background="@color/pause_color"-->
+        <!--android:textStyle="bold"/>-->
+    <TextView
+        android:id="@+id/center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="2dp"
-        android:text="@string/pause_button_text"
-        android:textColor="#ffffff"
-        android:background="#ffd700"
-        android:textStyle="bold"/>
+        android:layout_centerHorizontal="true"/>
     <Button
         android:id="@+id/btnStop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/btnPause"
+        android:layout_toEndOf="@+id/center"
         android:layout_alignParentBottom="true"
         android:layout_margin="2dp"
         android:text="@string/stop_button_text"
-        android:textColor="#ffffff"
-        android:clickable="true"
+        android:textColor="@color/white"
         android:background="@color/stop_color"
         android:textStyle="bold"/>
 

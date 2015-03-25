@@ -6,6 +6,9 @@
     <color name="pause_dark">#e6c204</color>
     <color name="stop_color">#f36c60</color>
     <color name="stop_dark">#c7584e</color>
+    <color name="grey_background">#eeeeee</color>
+    <color name="white">#ffffff</color>
+    <!--<color name="grey_background">#e0e0e0</color>-->
     <color name="red_50">#fde0dc</color>
     <color name="red_100">#f9bdbb</color>
     <color name="red_200">#f69988</color>

@@ -41,20 +41,6 @@ public class IntervalListFragment extends android.support.v4.app.ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-//        mFab = new FloatingActionButton.Builder(getActivity())
-//                .withColor(getResources().getColor(R.color.logo_color))
-//                .withDrawable(getResources().getDrawable(R.drawable.plus))
-//                .withSize(72)
-//                .withMargins(0, 0, 16, 16)
-//                .create();
-//
-//        mFab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                showDialog();
-//            }
-//        });
         try{
         intervals = (ArrayList<Interval>) Interval.listAll(Interval.class);}
         catch (android.database.sqlite.SQLiteException e){
@@ -69,6 +55,7 @@ public class IntervalListFragment extends android.support.v4.app.ListFragment {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         //menu.setHeaderTitle("Menu");
+        //TODO edit menu functionality
         menu.add(0, CONTEXT_ACTION_DELETE, 0, "Delete");
     }
 
@@ -76,6 +63,7 @@ public class IntervalListFragment extends android.support.v4.app.ListFragment {
     public boolean onContextItemSelected(MenuItem item) {
         if (item.getItemId() == CONTEXT_ACTION_DELETE) {
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+            //delete selected item and reset display
             ((IntervalListAdapter) getListAdapter()).remove(info.position);
             ((IntervalListAdapter) getListAdapter()).notifyDataSetChanged();
         } else {
@@ -92,6 +80,7 @@ public class IntervalListFragment extends android.support.v4.app.ListFragment {
 
     }
 
+    //assigns mListener to the activity
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -121,7 +110,8 @@ public class IntervalListFragment extends android.support.v4.app.ListFragment {
         }
     }
 
-
+    //this may not be the best implementation but it works
+    //TODO maybe too much memory used in list refresh()
     public void refresh(){
         //Log.d("REFRESH", "REFRESH CALLED");
         intervals = (ArrayList<Interval>) Interval.listAll(Interval.class);

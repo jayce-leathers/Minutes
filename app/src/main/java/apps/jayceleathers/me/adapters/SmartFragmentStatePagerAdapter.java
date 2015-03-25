@@ -6,7 +6,9 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 
+//TODO add to thank you page and add thank you page to menu and also make a thank you page
 /*
+   courtesy of Doug Coleman https://github.com/erg
    Extension of FragmentStatePagerAdapter which intelligently caches 
    all active fragments and manages the fragment lifecycles. 
    Usage involves extending from SmartFragmentStatePagerAdapter as you would any other PagerAdapter.

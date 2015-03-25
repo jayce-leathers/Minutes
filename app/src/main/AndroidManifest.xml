@@ -6,7 +6,7 @@
     <application
         tools:replace="android:icon"
         android:allowBackup="true"
-        android:icon="@drawable/logo"
+        android:icon="@drawable/logo1"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
         android:name="com.orm.SugarApp">
@@ -14,7 +14,7 @@
         <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="apps.jayceleathers.me.data" />
         <activity
             android:name="apps.jayceleathers.me.activities.MainActivity"
-            android:logo="@drawable/logo"
+            android:logo="@drawable/logo1"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
